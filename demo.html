@@ -1,0 +1,107 @@
+<!doctype html>
+
+<html>
+
+    <head>
+        <title>CursorLib Demo</title>
+        <style>
+            html, body {
+                font-family: Arial, sans-serif;
+                color: #333;
+                background: #fff;
+                text-align: center;
+            }
+
+            canvas {
+                border: silver solid 1px;
+                margin: 30px 0;
+            }
+
+            .cursorarea {
+                display: inline-block;
+                width: 400px;
+                height: 200px;
+                line-height: 200px;
+                border: silver solid 1px;
+                font-size: 12pt;
+                margin: 5px;
+                cursor: not-allowed;
+                color: gray;
+                position: relative;
+                border-radius: 5px;
+            }
+
+            .form {
+                margin-bottom: 30px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <canvas id="canvas"></canvas>
+        <div class="form">
+            <label for="cursor_size">Cursor size:</label>
+            <input type="text" name="cursor_size" id="cursor_size" value="64" />
+            <button id="cursor_size_apply">Apply</button>
+        </div>
+        <div id="cursor_curblob" class="cursorarea">Put mouse here</div>
+
+        <script src="src/cursorlib.js"></script>
+        <script>
+            var canvas = document.getElementById("canvas");
+
+            function draw_cursor(size) {
+                var size = size - (1-size%2);
+                canvas.width = size;
+                canvas.height = size;
+                var ctx = canvas.getContext("2d");
+
+                ctx.save();
+
+                ctx.strokeStyle = "red";
+                ctx.lineWidth = 2;
+                ctx.translate(size/2, size/2);
+
+                ctx.beginPath();
+                ctx.arc(0, 0, size/2-1|0, 0, 2*Math.PI);
+                ctx.stroke();
+
+                ctx.lineWidth = 1;
+
+                ctx.beginPath();
+                ctx.moveTo(0, -3);
+                ctx.lineTo(0, 3);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.moveTo(-3, 0);
+                ctx.lineTo(3, 0);
+                ctx.stroke();
+
+                ctx.restore();
+            }
+
+            function apply_cursor() {
+                var element = document.getElementById("cursor_curblob");
+                var cursor = cursorLib.canvasToCssCursorProperty(
+                        canvas, canvas.width/2, canvas.height/2, "crosshair");
+                element.style.cursor = cursor;
+
+            }
+
+            document.getElementById("cursor_size_apply").onclick = function() {
+                draw_cursor(parseInt(document.getElementById("cursor_size").value));
+                apply_cursor();
+            }
+
+            document.getElementById("cursor_size").onchange = function() {
+                draw_cursor(parseInt(document.getElementById("cursor_size").value));
+                apply_cursor();
+            }
+
+            draw_cursor(64);
+            apply_cursor();
+        </script>
+    </body>
+
+</html>
