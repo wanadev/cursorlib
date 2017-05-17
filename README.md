@@ -1,5 +1,7 @@
 # CursorLib: generates cursors from canvas
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/wanadev/cursorlib.svg)](https://greenkeeper.io/)
+
 CursorLib generates cursors that works on any browser (Firefox, MSIE,
 Chrome,...) from canvas.
 
