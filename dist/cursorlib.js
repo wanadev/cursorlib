@@ -130,7 +130,7 @@ function canvasToCssCursorProperty(canvas, hotspotX, hotspotY, alternative) {
     }
 
     // MSIE
-    if (window.ActiveXObject || "ActiveXObject" in window) {
+    if (window.ActiveXObject || /Edge/.test(navigator.userAgent)) {
         var blob = canvasToMsCursor(canvas, hotspotX, hotspotY);
         var url = URL.createObjectURL(blob);
         return "".concat("url(", url, "), ", alternative);

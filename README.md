@@ -33,6 +33,12 @@ var msCursorBlob = cursorLib.canvasToMsCursor(
 ```
 
 
+## Changelog
+
+* **1.0.1:** Detect Edge to generate a MS cursor for it (#10)
+* **1.0.0:** Initial release
+
+
 ## License
 
     Copyright (c) 2014, Wanadev <http://www.wanadev.fr/>
